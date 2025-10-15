@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title th:text="${usuario.id} != null ? 'Editar Usuario' : 'Nuevo Usuario'">Formulario Usuario</title>
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="card shadow p-4">
+      <h3 th:text="${usuario.id} != null ? 'Editar Usuario' : 'Registrar Usuario'" class="mb-4 text-primary"></h3>
+
+      <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="mb-3">
+          <label>Nombre</label>
+          <input type="text" th:field="*{nombre}" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label>Correo</label>
+          <input type="email" th:field="*{email}" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label>Rol</label>
+          <input type="text" th:field="*{rol}" class="form-control" />
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" th:field="*{activo}" class="form-check-input" />
+          <label class="form-check-label">Activo</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="/usuarios" class="btn btn-secondary">Cancelar</a>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

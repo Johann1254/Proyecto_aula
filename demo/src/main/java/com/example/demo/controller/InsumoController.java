@@ -61,7 +61,7 @@ public class InsumoController {
         return insumoService.actualizarInsumo(insumo);
     }
 
-    // ELIMINAR INSUMO
+    // ELIMINAR INSUMO  
     @DeleteMapping("/{id}")
     public void deleteInsumo(@PathVariable String id) {
         insumoService.eliminarInsumo(id);

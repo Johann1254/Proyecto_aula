@@ -13,6 +13,7 @@ public class Usuario {
     private String contrasena;
     private String correo;
     private String rol; // Nuevo campo para distinguir roles
+    private boolean activo;
 
     // Getters y Setters
     public Long getId() {
@@ -54,4 +55,14 @@ public class Usuario {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    
 }
