@@ -47,7 +47,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         filaSeleccionada.classList.add("fade-out");
-        setTimeout(() => filaSeleccionada.remove(), 300);
+        setTimeout(() => {
+          filaSeleccionada.remove();
+          // 🔁 Recargar la tabla si estás usando DataTable
+          if ($.fn.DataTable.isDataTable('#dataTable')) {
+            $('#dataTable').DataTable().ajax.reload();
+          }
+        }, 300);
         console.log(`✅ Usuario ${idSeleccionado} eliminado`);
       } else {
         alert("❌ No se pudo eliminar el usuario (error del servidor).");

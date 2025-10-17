@@ -20,18 +20,30 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/css/**", "/js/**", "/img/**", "/scss/**", "/vendor/**").permitAll()
-                .requestMatchers("/home/**").hasRole("ADMIN")
-                .requestMatchers("/perfil/**").hasRole("USER")
-                .anyRequest().authenticated()
-            )
-            .formLogin(login -> login
-                .loginPage("/login")
-                .successHandler(successHandler) // 👈 Aquí se aplica
-                .permitAll()
-            )
-            .logout(logout -> logout.permitAll());
+                // 🔹 Desactivar CSRF solo para las rutas de API
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**"))
+
+                .authorizeHttpRequests(auth -> auth
+                        // Recursos públicos
+                        .requestMatchers("/login", "/css/**", "/js/**", "/img/**", "/scss/**", "/vendor/**").permitAll()
+
+                        // 🔹 Permitir acceso a la API solo a ADMIN
+                        .requestMatchers("/api/usuarios/**").hasRole("ADMIN")
+
+                        // Rutas de vistas protegidas
+                        .requestMatchers("/home/**").hasRole("ADMIN")
+                        .requestMatchers("/perfil/**").hasRole("USER")
+
+                        // Todo lo demás requiere autenticación
+                        .anyRequest().authenticated())
+
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .successHandler(successHandler)
+                        .permitAll())
+
+                .logout(logout -> logout.permitAll());
 
         return http.build();
     }
