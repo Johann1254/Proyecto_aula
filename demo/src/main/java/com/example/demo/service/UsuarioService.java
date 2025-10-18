@@ -1,16 +1,12 @@
 package com.example.demo.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.example.demo.model.mysql.Usuario;
+import com.example.demo.repos.mysql.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.model.mysql.Usuario;
-import com.example.demo.repos.mysql.UsuarioRepository;
-
-import jakarta.annotation.PostConstruct;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -21,74 +17,39 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // 🔹 Listar todos los usuarios
+    // Listar todos
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
     }
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    // Guardar nuevo
+    public Usuario guardarUsuario(Usuario usuario) {
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        return usuarioRepository.save(usuario);
     }
 
-    // 🔹 Guardar o actualizar un usuario
-    public void guardarUsuario(Usuario usuario) {
-        // Si es nuevo usuario o está cambiando la contraseña, la encriptamos
+    // Actualizar existente
+    public Usuario actualizarUsuario(Usuario usuario) {
         if (usuario.getId() == null) {
-            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
-        } else {
-            // Si ya existe, conservar la contraseña anterior si no se envió una nueva
-            Usuario existente = usuarioRepository.findById(usuario.getId()).orElse(null);
-            if (existente != null) {
-                if (usuario.getContrasena() == null || usuario.getContrasena().isBlank()) {
-                    usuario.setContrasena(existente.getContrasena());
-                } else {
-                    usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
-                }
-            }
+            throw new IllegalArgumentException("El ID del usuario es obligatorio");
         }
-        usuarioRepository.save(usuario);
+        // Si la contraseña viene vacía, conservar la anterior
+        Usuario existente = usuarioRepository.findById(usuario.getId()).orElseThrow();
+        if (usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
+            usuario.setContrasena(existente.getContrasena());
+        } else {
+            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        }
+        return usuarioRepository.save(usuario);
     }
 
-    // 🔹 Obtener usuario por ID
-    public Usuario obtenerPorId(Long id) {
-        return usuarioRepository.findById(id).orElse(null);
+    // Obtener por ID
+    public Optional<Usuario> obtenerPorId(Long id) {
+        return usuarioRepository.findById(id);
     }
 
-    // 🔹 Eliminar usuario
+    // Eliminar
     public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
-    }
-
-    // 🔹 Crear usuario directamente (para inicialización)
-    public Usuario createUsuario(String usuario, String contrasena, String correo, String rol) {
-        Usuario nuevo = new Usuario();
-        nuevo.setUsuario(usuario);
-        nuevo.setContrasena(passwordEncoder.encode(contrasena));
-        nuevo.setCorreo(correo);
-        nuevo.setRol(rol);
-        return usuarioRepository.save(nuevo);
-    }
-
-    // 🔹 Buscar usuario por nombre
-    public Optional<Usuario> findByUsuario(String usuario) {
-        return usuarioRepository.findByUsuario(usuario);
-    }
-
-    // 🔹 Verificar si existe un usuario
-    public boolean existsByUsuario(String usuario) {
-        return usuarioRepository.findByUsuario(usuario).isPresent();
-    }
-
-    // 🔹 Crear usuarios iniciales al iniciar la aplicación
-    @PostConstruct
-    public void inicializarUsuariosPorDefecto() {
-        if (!existsByUsuario("admin")) {
-            createUsuario("admin", "admin123", "admin@sistemadegestionsrp.com.co", "ROLE_ADMIN");
-            System.out.println("✅ Administrador creado: admin / admin123");
-        }
-        if (!existsByUsuario("user")) {
-            createUsuario("user", "user123", "user@sistemadegestionsrp.com.co", "ROLE_USER");
-            System.out.println("✅ Usuario normal creado: user / user123");
-        }
     }
 }
