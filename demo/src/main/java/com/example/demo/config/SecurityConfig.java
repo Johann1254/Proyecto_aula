@@ -33,7 +33,7 @@ public class SecurityConfig {
 
                         // Rutas de vistas protegidas
                         .requestMatchers("/home/**").hasRole("ADMIN")
-                        .requestMatchers("/home/**").hasRole("USER")
+                        .requestMatchers("/perfil/**").hasRole("USER")
 
                         // Todo lo demás requiere autenticación
                         .anyRequest().authenticated())
