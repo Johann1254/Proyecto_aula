@@ -22,15 +22,20 @@ public class UsuarioDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByUsuario(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        // 🔹 Validar si el usuario está activo
-        if (!usuario.isActivo()) {
+        // Asegurar que el rol tenga el prefijo "ROLE_"
+        String rol = usuario.getRol().startsWith("ROLE_") ? usuario.getRol() : "ROLE_" + usuario.getRol();
+
+         if (!usuario.isActivo()) {
             throw new DisabledException("El usuario está inactivo. Contacta al administrador.");
         }
 
+        // Devuelve el usuario sin validación de activo/inactivo
         return new User(
                 usuario.getUsuario(),
                 usuario.getContrasena(),
-                Collections.singleton(new SimpleGrantedAuthority(usuario.getRol()))
+                Collections.singleton(new SimpleGrantedAuthority(rol))
         );
     }
+
+    
 }

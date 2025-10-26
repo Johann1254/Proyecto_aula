@@ -28,10 +28,6 @@
   <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 
-<div th:if="${param.error}">
-  <p style="color: red;" th:text="${param.error}"></p>
-</div>
-
 <body>
   <div class="login-container">
     <!-- Sección izquierda (logo) -->
@@ -43,6 +39,10 @@
     <div class="login-right">
       <div class="text-center">
         <h2>¡Bienvenido de nuevo!</h2>
+      </div>
+
+      <div th:if="${param.error}">  
+        <p style="color: red;" th:text="${param.error}"></p>
       </div>
 
       <form class="user" th:action="@{/login}" method="post">

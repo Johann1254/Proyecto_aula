@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.model.mysql.Usuario;
 import com.example.demo.repos.mysql.UsuarioRepository;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,4 +54,6 @@ public class UsuarioService {
     public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    
 }

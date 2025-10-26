@@ -1,6 +1,7 @@
 package com.example.demo.security;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,23 +19,23 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication)
-                                        throws IOException, ServletException {
+            throws IOException, ServletException {
 
-        // ✅ Obtenemos el rol del usuario autenticado
-        String redirectURL = request.getContextPath();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        for (GrantedAuthority auth : authentication.getAuthorities()) {
-            String role = auth.getAuthority();
+        for (GrantedAuthority authority : authorities) {
+            String role = authority.getAuthority();
+
             if (role.equals("ROLE_ADMIN")) {
-                redirectURL = "/home";
-                break;
+                response.sendRedirect("/home");
+                return;
             } else if (role.equals("ROLE_USER")) {
-                redirectURL = "/perfil";
-                break;
+                response.sendRedirect("/perfil");
+                return;
             }
         }
 
-        // 🚀 Redirige a la página correspondiente
-        response.sendRedirect(redirectURL);
+        // Si no tiene rol, redirige al login
+        response.sendRedirect("/login?error=true");
     }
 }

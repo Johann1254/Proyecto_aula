@@ -1,7 +1,8 @@
 package com.example.demo.config;
 
-import com.example.demo.security.CustomAuthenticationSuccessHandler;
 import com.example.demo.security.CustomAuthenticationFailureHandler;
+import com.example.demo.security.CustomAuthenticationSuccessHandler;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +35,7 @@ public class SecurityConfig {
                 .formLogin(login -> login
                         .loginPage("/login")
                         .successHandler(successHandler)
-                        .failureHandler(failureHandler) // 👈 aquí se maneja el usuario inactivo
+                        .failureHandler(failureHandler)
                         .permitAll())
                 .logout(logout -> logout.permitAll());
 

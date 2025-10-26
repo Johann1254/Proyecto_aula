@@ -48,4 +48,6 @@ public class UsuarioVistaController {
             return "error"; // vista de error genérica
         }
     }
+
+    
 }

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}">
 
 <head>
   <meta charset="UTF-8">
@@ -10,8 +8,8 @@
   <title>Registrar usuario - SDGDI</title>
 
   <!-- Estilos -->
-  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+  <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet">
+  <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -71,8 +69,7 @@
   <div id="overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;
        background:#00000077;z-index:1000;"></div>
 
-  <div id="alertaExito" class="d-none"
-       style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  <div id="alertaExito" class="d-none" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
               background:white;padding:2rem;border-radius:10px;z-index:1001;
               flex-direction:column;align-items:center;text-align:center;">
     <h4 class="title"></h4>
@@ -85,9 +82,10 @@
 
   <!-- Scripts -->
   <div layout:fragment="scripts">
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/agregar-usuario.js"></script>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/agregar-usuario.js}"></script>
   </div>
 </body>
+
 </html>

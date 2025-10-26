@@ -23,10 +23,10 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                                         AuthenticationException exception)
                                         throws IOException, ServletException {
 
-        String errorMessage = "Error de autenticación";
+        String errorMessage = "Tu usuario está inactivo. Contacta al administrador";
 
         if (exception instanceof DisabledException) {
-            errorMessage = "Tu usuario está inactivo. Contacta al administrador.";
+            errorMessage = "Tu usuario esta inactivo. Contacta al administrador.";
         } else if (exception instanceof BadCredentialsException) {
             errorMessage = "Usuario o contraseña incorrectos.";
         }
