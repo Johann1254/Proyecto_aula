@@ -11,8 +11,14 @@ public class HomeVistaController {
         return "landing";
     }
 
-    @GetMapping({"/dashboard", "/home"})
+    @GetMapping({ "/dashboard", "/home" })
     public String index() {
         return "home/home";
     }
+
+    @GetMapping("/home_u")
+    public String userHome() {
+        return "home/home_u";
+    }
+
 }

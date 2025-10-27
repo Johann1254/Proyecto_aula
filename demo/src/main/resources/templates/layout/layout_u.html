@@ -8,7 +8,7 @@
   <meta name="description" content="Panel del usuario" />
   <meta name="author" content="" />
 
-  <title>Panel de Usuario</title>
+  <title>Dashboard</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/img/icons8-coser-16.png" />
@@ -17,9 +17,7 @@
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
 
   <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet" />
 
   <!-- Estilos del template -->
   <link href="css/sb-admin-2.min.css" rel="stylesheet" />
@@ -34,11 +32,14 @@
     <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/usuario/dashboard}">
-        <div class="sidebar-brand-icon">
-          <img src="/img/logo_mini.png" alt="logo" width="40" />
+      <a class="sidebar-brand d-flex align-items-center brand-logo" th:href="@{/dashboard}">
+        <div class="brand-icon">
+          <img src="/img/logo_miniatura.png" alt="Logo CostuSoft" class="logo-img" />
         </div>
-        <div class="sidebar-brand-text mx-3">SDGDI <sup>Usuario</sup></div>
+        <div class="brand-text">
+          <span class="brand-title">CostuSoft</span>
+          <span class="brand-subtitle">Control</span>
+        </div>
       </a>
 
       <hr class="sidebar-divider my-0" />
@@ -47,7 +48,7 @@
       <li class="nav-item">
         <a class="nav-link" th:href="@{/usuario/dashboard}">
           <i class="fas fa-home"></i>
-          <span>Inicio</span>
+          <span>Dashboard</span>
         </a>
       </li>
 
@@ -110,15 +111,14 @@
 
             <!-- Usuario -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
                 <img class="img-profile rounded-circle" src="/img/undraw_profile.svg" />
               </a>
 
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="userDropdown">
-                <a class="dropdown-item" th:href="@{/usuario/perfil}">
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" th:href="@{/perfil}">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Perfil
                 </a>
@@ -144,7 +144,7 @@
         <footer class="sticky-footer bg-white">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
-              <span>&copy; 2025 SRP - Gestión de Inventario | Usuario</span>
+              <span>&copy; 2025 SRP - Gestión de Inventario | La Señora Piedad</span>
             </div>
           </div>
         </footer>
@@ -158,8 +158,8 @@
   </a>
 
   <!-- Logout Modal -->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -190,4 +190,5 @@
   <div layout:fragment="scripts"></div>
 
 </body>
+
 </html>

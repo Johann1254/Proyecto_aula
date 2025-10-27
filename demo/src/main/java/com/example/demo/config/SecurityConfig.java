@@ -35,7 +35,7 @@ public class SecurityConfig {
                         // ✅ Rutas privadas
                         .requestMatchers("/api/usuarios/**").hasRole("ADMIN")
                         .requestMatchers("/home/**").hasRole("ADMIN")
-                        .requestMatchers("/perfil/**").hasRole("USER")
+                        .requestMatchers("/home_u/**", "/usuario/**").hasRole("USER")
 
                         // Todo lo demás requiere login
                         .anyRequest().authenticated())
@@ -46,8 +46,12 @@ public class SecurityConfig {
                         .failureHandler(failureHandler)
                         .permitAll())
                 // Logout
-                .logout(logout -> logout.permitAll());
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/") // redirige al landing después de cerrar sesión
+                        .permitAll());
 
+                        
         return http.build();
     }
 

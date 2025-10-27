@@ -54,12 +54,24 @@ body {
 }
 
 .btn-login {
-  background: white;
-  color: var(--primary);
+  background: rgb(0, 176, 80);
+  color: var(--primary) ; /* <-- cambia el color del texto a azul */
   padding: 0.5rem 1rem;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
   font-weight: bold;
+  
 }
+
+.btn-login:hover {
+  background: #ffffff;
+  color: var(--primary)!important ;
+  transform: scale(1.05);
+  font-weight: bold;
+} 
 
 .menu-toggle {
   display: none;
