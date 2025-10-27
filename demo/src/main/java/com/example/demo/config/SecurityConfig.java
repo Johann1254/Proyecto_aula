@@ -27,16 +27,25 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/css/**", "/js/**", "/img/**", "/scss/**", "/vendor/**").permitAll()
+                        // Rutas públicas
+                        .requestMatchers("/", "/landing", "/login", "/css/**", "/js/**", "/img/**", "/scss/**",
+                                "/vendor/**")
+                        .permitAll()
+
+                        // ✅ Rutas privadas
                         .requestMatchers("/api/usuarios/**").hasRole("ADMIN")
                         .requestMatchers("/home/**").hasRole("ADMIN")
                         .requestMatchers("/perfil/**").hasRole("USER")
+
+                        // Todo lo demás requiere login
                         .anyRequest().authenticated())
+                // Configuración del login
                 .formLogin(login -> login
                         .loginPage("/login")
                         .successHandler(successHandler)
                         .failureHandler(failureHandler)
                         .permitAll())
+                // Logout
                 .logout(logout -> logout.permitAll());
 
         return http.build();

@@ -4,11 +4,12 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
-  background-color: #0b3d91; /* Azul del logo */
+  height: 100vh;
+  background: url("/img/fondo_login.png") no-repeat center center fixed;
+  background-size: cover; /* Hace que se adapte a toda la pantalla */
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 
 /* ====== Contenedor principal ====== */
@@ -125,7 +126,6 @@ body {
   color: #49c21b;
   text-decoration: underline;
 }
-
 
 /* ====== Responsivo ====== */
 @media (max-width: 768px) {
