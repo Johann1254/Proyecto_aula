@@ -29,16 +29,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Rutas públicas
                         .requestMatchers("/", "/landing", "/login", "/css/**", "/js/**", "/img/**", "/scss/**",
-                                "/vendor/**")
-                        .permitAll()
+                                "/vendor/**").permitAll()
 
-                        // ✅ Rutas privadas
+                        // Rutas privadas
                         .requestMatchers("/api/usuarios/**").hasRole("ADMIN")
                         .requestMatchers("/home/**").hasRole("ADMIN")
                         .requestMatchers("/home_u/**", "/usuario/**").hasRole("USER")
-
-                        // Todo lo demás requiere login
+                        .requestMatchers("/reporte/**", "/reportes/**", "/generar-reporte/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated())
+
                 // Configuración del login
                 .formLogin(login -> login
                         .loginPage("/login")
@@ -48,10 +47,9 @@ public class SecurityConfig {
                 // Logout
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/") // redirige al landing después de cerrar sesión
+                        .logoutSuccessUrl("/login") // redirige al landing después de cerrar sesión
                         .permitAll());
 
-                        
         return http.build();
     }
 
