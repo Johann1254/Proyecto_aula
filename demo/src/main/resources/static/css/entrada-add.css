@@ -18,3 +18,9 @@
   max-height: 200px;
   overflow-y: auto;
 }
+
+#proveedor.form-control {
+  width: 80%;       /* Reduce el ancho */
+  height: 2.2rem;   /* Baja la altura */
+  font-size: 0.9rem;
+}

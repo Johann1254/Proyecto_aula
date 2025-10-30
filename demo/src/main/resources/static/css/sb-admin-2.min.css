@@ -10435,3 +10435,87 @@ body.sidebar-toggled footer.sticky-footer {
     display: none;
   }
 }
+/* ====== CORRECCIÓN FOOTER STICKY (AGREGAR AL FINAL) ====== */
+
+html {
+  height: 100%;
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* El wrapper debe ser flex container con altura mínima COMPLETA */
+#wrapper {
+  display: flex !important;
+  min-height: 100vh !important; /* Altura mínima de toda la ventana */
+  flex-direction: row !important; /* Sidebar y content lado a lado */
+}
+
+/* CRÍTICO: El content-wrapper debe ser flex column */
+#wrapper #content-wrapper {
+  background-color: #f8f9fc;
+  width: 100%;
+  overflow-x: hidden;
+  display: flex !important;
+  flex-direction: column !important; /* Content arriba, footer abajo */
+  min-height: 100vh !important; /* Altura mínima completa */
+}
+
+/* El contenido principal debe CRECER para empujar el footer */
+#wrapper #content-wrapper #content {
+  flex: 1 0 auto !important; /* Crece para ocupar espacio disponible */
+  padding-bottom: 1rem;
+}
+
+/* El footer se mantiene al final */
+footer.sticky-footer {
+  padding: 1.5rem 0 !important;
+  flex-shrink: 0 !important; /* No se comprime */
+  margin-top: auto !important; /* Se empuja al final */
+  width: 100% !important;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Específico para bg-white */
+footer.sticky-footer.bg-white {
+  background-color: #fff !important;
+  border-top: 1px solid #e3e6f0;
+}
+
+/* Ajustes para el container del footer */
+footer.sticky-footer .container.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* Copyright text styling */
+footer.sticky-footer .copyright {
+  line-height: 1.5;
+  font-size: 0.8rem;
+}
+
+footer.sticky-footer .copyright span {
+  color: #858796;
+  font-weight: 400;
+}
+
+/* Cuando el sidebar está colapsado */
+body.sidebar-toggled footer.sticky-footer {
+  width: 100%;
+}
+
+/* SOLUCIÓN ADICIONAL: Si usas clases de Bootstrap */
+.d-flex.flex-column {
+  min-height: 100vh !important;
+}
+
+/* Para contenedores con poco contenido */
+.container-fluid,
+.container {
+  min-height: auto;
+}

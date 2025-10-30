@@ -202,3 +202,20 @@ document.addEventListener("DOMContentLoaded", () => {
   btnCerrarAlerta?.addEventListener("click", ocultarAlerta);
   btnAceptarAlerta?.addEventListener("click", ocultarAlerta);
 });
+
+
+// Cargar proveedores al cargar la página
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("/api/proveedores")
+    .then((response) => response.json())
+    .then((data) => {
+      const selectProveedor = document.getElementById("proveedor");
+      data.forEach((prov) => {
+        const option = document.createElement("option");
+        option.value = prov.id; // o prov._id si usas Mongo
+        option.textContent = prov.nombre;
+        selectProveedor.appendChild(option);
+      });
+    })
+    .catch((error) => console.error("Error cargando proveedores:", error));
+});
