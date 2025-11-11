@@ -30,16 +30,37 @@ document.addEventListener("DOMContentLoaded", () => {
   // Carga inicial de la entrada
   async function cargarEntrada(id) {
     try {
+      // 1️⃣ Cargar entrada
       const res = await fetch(`http://localhost:8080/api/entradas/${id}`);
       if (!res.ok) throw new Error("Entrada no encontrada");
 
       const entrada = await res.json();
       console.log("Entrada cargada:", entrada);
 
+      // 2️⃣ Cargar proveedores (API que ya tengas)
+      const resProv = await fetch("http://localhost:8080/api/proveedores");
+      const proveedores = await resProv.json();
+
+      const selectProveedor = document.getElementById("proveedor");
+      selectProveedor.innerHTML = '<option value="">Seleccione un proveedor</option>';
+
+      proveedores.forEach((prov) => {
+        const option = document.createElement("option");
+        option.value = prov.id;
+        option.textContent = prov.nombre;
+        selectProveedor.appendChild(option);
+      });
+
+      // 3️⃣ Mostrar datos de la entrada
       document.getElementById("fecha").value = entrada.fecha;
       document.getElementById("descripcion").value = entrada.descripcion;
-      inputProveedor.value = entrada.proveedor || "";
 
+      // 4️⃣ Seleccionar proveedor actual (si existe)
+      if (entrada.proveedor && entrada.proveedor.id) {
+        selectProveedor.value = entrada.proveedor.id;
+      }
+
+      // 5️⃣ Mostrar detalles
       if (entrada.detalles && entrada.detalles.length > 0) {
         detallesEntrada = entrada.detalles;
         renderizarTablaInsumos();
@@ -48,7 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error al cargar la entrada:", error);
     }
   }
-
   // Renderiza la tabla de insumos con botones Editar y Eliminar
   function renderizarTablaInsumos() {
     tablaInsumosBody.innerHTML = "";
@@ -169,9 +189,10 @@ document.addEventListener("DOMContentLoaded", () => {
         id: entradaId,
         fecha: document.getElementById("fecha").value,
         descripcion: document.getElementById("descripcion").value,
-        proveedor: inputProveedor.value,
+        proveedor: { id: inputProveedor.value }, // 👈 cambio aquí
         detalles: detallesEntrada,
       };
+
 
       console.log("Actualizando entrada con datos:", datosActualizados);
 
